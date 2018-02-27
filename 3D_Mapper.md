@@ -36,6 +36,13 @@ This document will look into a rig capable of sensing 3D environment around the 
      - Launch a new terminal and go to Velodyne_ws you've made in building phase. Run `source devel/setup.bash` and run `roslaunch velodyne_pointcloud VLP16_points.launch`. With this, you'll now have your Lidar publishing its mesage.
      - Launch a new terminal and run `rostopic list` and write down the topic you need to use. 
      - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look in to like this. ![new_rig](https://raw.githubusercontent.com/KnoxKang/KnoxKang-Company-work/master/Images/New_Rig.png)
+     - Launch a new terminal and run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING -O static.bag` to record data for static calibration.
+     - Run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING /imu -O dynamic.bag` to record data for dynamic calibration.
+     - Run `source (Kalibr workspace you've made)/devel/setup.bash` and run `kalibr_calibrate_cameras --bag static.bag --target april_6x6_50x50cm.yaml --models pinhole-equi pinhole-equi --topics /camera/left/image_SOMETHING /camera/left/image_SOMETHING` to calibrate your cameras. This process will take a long time. 
+     - Check the results plotted on screen. Remember, good calibration will come up with a reprojection error result tightly packed in a square less than 1 pixel per side. 
+     - Run `source (Kalibr workspace you've made)/devel/setup.bash` if you are using new terminal, and run `kalibr_calibrate_imu_camera --target april_6x6_50x50cm.yaml --cam camchain-static.yaml --imu (IMU yaml file location) --bag dynamic.bag` to calibrate your cameras with IMU. This process will take lesser time than static calibration.
+     
 
 ## Things to do
 - Make an algorythm that can acknowledge planes and use camera image data to apply texture on it.
+- Make all this procedure automated, so that using these won't be a problem for others.
