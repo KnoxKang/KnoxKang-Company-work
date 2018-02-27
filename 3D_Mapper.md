@@ -18,7 +18,7 @@ This document will look into a rig capable of sensing 3D environment around the 
 # How to build/use
 - ## How to build
      - Hardware configuration can differ from person to person. Although, an example picture will be helpful.
-     ![NEW_RIG](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Images/NEW_RIG.jpeg?raw=true)
+     ![NEW_RIG](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Images/NEW_RIG.jpeg?raw=true) Notice that this picture doesn't has a IMU on it. IMU was added afterward on one of the camera arms.
      - Software wise, You have a lot to take care of.
        - Download Ros from [Here](http://wiki.ros.org/kinetic/Installation) and install it as instructed.
        - Download Kalibr from [Here](https://github.com/ethz-asl/kalibr/wiki/installation#b-building-from-source) and build it as instructed. Reason for using source code building instead of CDE package is because you need to modify a bit of a code to make this rig work.
