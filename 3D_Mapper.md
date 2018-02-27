@@ -36,3 +36,6 @@ This document will look into a rig capable of sensing 3D environment around the 
      - Launch a new terminal and go to Velodyne_ws you've made in building phase. Run `source devel/setup.bash` and run `roslaunch velodyne_pointcloud VLP16_points.launch`. With this, you'll now have your Lidar publishing its mesage.
      - Launch a new terminal and run `rostopic list` and write down the topic you need to use. 
      - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look in to like this. ![new_rig](https://raw.githubusercontent.com/KnoxKang/KnoxKang-Company-work/master/Images/New_Rig.png)
+
+## Things to do
+- Make an algorythm that can acknowledge planes and use camera image data to apply texture on it.
