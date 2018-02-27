@@ -35,4 +35,4 @@ This document will look into a rig capable of sensing 3D environment around the 
      - Launch a new terminal and run `roslaunch pointgrey_camera_driver stereo.launch left_camera_serial:=00000000 right_camera_serial:=00000000`. Replace 00000000 with your own camera serials. After this, you'll have your camera publishing its message in ros topic format.
      - Launch a nwe terminal and go to Velodyne_ws you've made in building phase. Run `source devel/setup.bash` and run `roslaunch velodyne_pointcloud VLP16_points.launch`. With this, you'll now have your Lidar publishing its mesage.
      - Launch a new terminal and run `rostopic list` and write down the topic you need to use. 
-     - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look in to.
+     - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look in to like this. ![new_rig](https://raw.githubusercontent.com/KnoxKang/KnoxKang-Company-work/master/Images/New_Rig.png)
