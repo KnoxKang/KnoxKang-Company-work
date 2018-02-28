@@ -1,4 +1,4 @@
-# Rig to map, reconstruct 3D environment.
+# Rig for 3D environment mapping and recontruction
 This document will look into a rig capable of sensing 3D environment around the rig in form of point cloud via LRF, and apply texture to that point cloud from image data gathered by camera, with help of IMU measuring the rig's transformation and orientation.
 
 ## Devices used
@@ -23,10 +23,18 @@ This document will look into a rig capable of sensing 3D environment around the 
        - Download Ros from [Here](http://wiki.ros.org/kinetic/Installation) and install it as instructed.
        - Download Kalibr from [Here](https://github.com/ethz-asl/kalibr/wiki/installation#b-building-from-source) and build it as instructed. Reason for using source code building instead of CDE package is because you need to modify a bit of a code to make this rig work.
        - Download Point grey camera driver named Flycap2 SDK from [Here](https://www.ptgrey.com/support/downloads). You'll need to sign up on point grey site if you haven't.
-       - Download ros Point grey camera driver from [Here](http://wiki.ros.org/pointgrey_camera_driver) and install it as instructed. Remember, you need to install version corresponding to your ros version (kinetic to knitic, lunar to lunar etc..)
-       - Download ros Razor IMU driver from [Here](http://wiki.ros.org/razor_imu_9dof) on section 4 and install it as instructed. Except, use imu_ws instead of catkin_ws. Remember to use source install.
+       - Download _ros Point grey camera driver_ from [Here](http://wiki.ros.org/pointgrey_camera_driver) and install it as instructed. Remember, you need to install version corresponding to your ros version (kinetic to knitic, lunar to lunar etc..)
+       - Download _ros Razor IMU driver_ from [Here](http://wiki.ros.org/razor_imu_9dof) on section 4 and install it as instructed. Except, use imu_ws instead of catkin_ws. Remember to use source install.
        - Download Arduino IDE from [Here](https://www.arduino.cc/en/Main/Software) and install it.
-       - Download Velodyne Lidar driver by running the following commands. `mkdir velodyne_ws`, `cd velodyne_ws`, `mkdir src`, `git clone https://github.com/ros-drivers/velodyne.git`, `cd ..`, `catkin make`
+       - Download Velodyne Lidar driver by running the following commands. 
+       ```
+       mkdir velodyne_ws
+       cd velodyne_ws
+       mkdir src
+       git clone https://github.com/ros-drivers/velodyne.git
+       cd ..
+       catkin make
+       ```
        - Reflash IMU's firmware using Arduino IDE using [This](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Razor_AHRS.ino) source instead of original `Razor_AHRS.ino`. This custom firmware allows IMU to trigger cameras, and Lidar.
        - In case you want to use raw format from point grey camera, modify  `elif data.encoding == "8UC1" or data.encoding == "mono8":` to `elif data.encoding == "8UC1" or data.encoding == "mono8" or data.encoding == "bayer_rggb8":` in `kalibr_workspace/src/Kalibr/aslam_offline_calibration/kalibr/python/kalibr_common/ImageDatasetReader.py` at 135th line. This is to let `bayer_rgbg8` format converted to greyscale image used in Kalibr.
 - ## How to use
