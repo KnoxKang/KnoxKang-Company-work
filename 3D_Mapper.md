@@ -27,7 +27,7 @@ This document will look into a rig capable of sensing 3D environment around the 
        - Download ros Razor IMU driver from [Here](http://wiki.ros.org/razor_imu_9dof) and install it as instructed. Remember to use source install.
        - Download Arduino IDE from [Here](https://www.arduino.cc/en/Main/Software) and install it.
        - Download Velodyne Lidar driver by running the following commands. `mkdir velodyne_ws`, `cd velodyne_ws`, `mkdir src`, `git clone https://github.com/ros-drivers/velodyne.git`, `cd ..`, `catkin make`
-       - Reflash IMU's firmware using Arduino IDE using [This](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Razor_AHRS.ino) source instead of original `Razod_AHRS.ino`. This custom firmware allows IMU to trigger cameras, and Lidar.
+       - Reflash IMU's firmware using Arduino IDE using [This](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Razor_AHRS.ino) source instead of original `Razor_AHRS.ino`. This custom firmware allows IMU to trigger cameras, and Lidar.
        - In case you want to use raw format from point grey camera, modify  `elif data.encoding == "8UC1" or data.encoding == "mono8":` to `elif data.encoding == "8UC1" or data.encoding == "mono8" or data.encoding == "bayer_rggb8":` in `kalibr_workspace/src/Kalibr/aslam_offline_calibration/kalibr/python/kalibr_common/ImageDatasetReader.py` at 135th line. This is to let `bayer_rgbg8` format converted to greyscale image used in Kalibr.
 - ## How to use
      - Before starting, default usb buffer size(20mB) is not enough for point grey cameras. Follow [Configuring USBFS](https://www.ptgrey.com/tan/10685) instruction to clear that issue.
