@@ -9,9 +9,9 @@ This document will look into a rig capable of sensing 3D environment around the 
 
 ## Softwares used
 - [ROS (Robot OS)](http://www.ros.org/) : This software is the core software for this rig. In this rig, Kinetic Kame version is used.
-  - ros Point grey camera driver : This is a driver needed to run two point grey cameras (If you want to change it to different camera(s), You'll need to find appropirate camera driver for that Camera).
-  - ros Velodyne driver : This is a driver required to run Velodyne Lidar (If you want to change it to different LRF, You'll need to find right driver for that LRF).
-  - ros Razor IMU driver : This is a driver needed to run Razor IMU from Sparkfun (If you want to change it to different IMU, You'll need to find corresponding driver for that IMU).
+  - [ros Point grey camera driver](http://wiki.ros.org/pointgrey_camera_driver) : This is a driver needed to run two point grey cameras (If you want to change it to different camera(s), You'll need to find appropirate camera driver for that Camera).
+  - [ros Velodyne driver](http://wiki.ros.org/velodyne) : This is a driver required to run Velodyne Lidar (If you want to change it to different LRF, You'll need to find right driver for that LRF).
+  - [ros Razor IMU driver](http://wiki.ros.org/razor_imu_9dof) : This is a driver needed to run Razor IMU from Sparkfun (If you want to change it to different IMU, You'll need to find corresponding driver for that IMU).
 - [Kalibr](https://github.com/ethz-asl/kalibr) : This software is built by Autonomous Systems Lab and Skybotix AG. It is used in this rig to calibrate cameras, cameras with IMU, cameras with LRF (In case of camera-LRF calibration, You'll need to look into experimental branch).
 - [Arduino IDE](https://www.arduino.cc/en/Main/Software) : This developement environment is used in building this rig to customize IMU's firmware, So that IMU can function as a trigger device for cameras and LRF.
 
