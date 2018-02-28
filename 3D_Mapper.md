@@ -26,7 +26,8 @@ This document will look into a rig capable of sensing 3D environment around the 
        - Download ros Point grey camera driver from [Here](http://wiki.ros.org/pointgrey_camera_driver) and install it as instructed. Remember, you need to install version corresponding to your ros version (kinetic to knitic, lunar to lunar etc..)
        - Download ros Razor IMU driver from [Here](http://wiki.ros.org/razor_imu_9dof) and install it as instructed. Remember to use source install.
        - Download Arduino IDE from [Here](https://www.arduino.cc/en/Main/Software) and install it.
-       - Reflash IMU's firmware using Arduino IDE using [This](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Razor_AHRS.ino) source. This firmware allows IMU to trigger cameras, and Lidar.
+       - Download Velodyne Lidar driver by running the following commands. `mkdir velodyne_ws`, `cd velodyne_ws`, `mkdir src`, `git clone https://github.com/ros-drivers/velodyne.git`, `cd ..`, `catkin make`
+       - Reflash IMU's firmware using Arduino IDE using [This](https://github.com/KnoxKang/KnoxKang-Company-work/blob/master/Razor_AHRS.ino) source instead of original `Razod_AHRS.ino`. This custom firmware allows IMU to trigger cameras, and Lidar.
        - In case you want to use raw format from point grey camera, modify  `elif data.encoding == "8UC1" or data.encoding == "mono8":` to `elif data.encoding == "8UC1" or data.encoding == "mono8" or data.encoding == "bayer_rggb8":` in `kalibr_workspace/src/Kalibr/aslam_offline_calibration/kalibr/python/kalibr_common/ImageDatasetReader.py` at 135th line. This is to let `bayer_rgbg8` format converted to greyscale image used in Kalibr.
 - ## How to use
      - Before starting, default usb buffer size(20mB) is not enough for point grey cameras. Follow [Configuring USBFS](https://www.ptgrey.com/tan/10685) instruction to clear that issue.
@@ -34,9 +35,9 @@ This document will look into a rig capable of sensing 3D environment around the 
      - Launch a new terminal and go to IMU_ws you've made in building phase. Run `source devel/setup.bash` and run `roslaunch razor_imu_9dof razor-pub.launch`. Now you'll have your imu publishing its message in `/imu` topic.
      - Launch a new terminal and run `roslaunch pointgrey_camera_driver stereo.launch left_camera_serial:=00000000 right_camera_serial:=00000000`. Replace 00000000 with your own camera serials. After this, you'll have your camera publishing its message in ros topic format.
      - Launch a new terminal and go to Velodyne_ws you've made in building phase. Run `source devel/setup.bash` and run `roslaunch velodyne_pointcloud VLP16_points.launch`. With this, you'll now have your Lidar publishing its mesage.
-     - Launch a new terminal and run `rostopic list` and write down the topic you need to use. 
-     - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look in to like this. ![new_rig](https://raw.githubusercontent.com/KnoxKang/KnoxKang-Company-work/master/Images/New_Rig.png)
-     - Launch a new terminal and run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING -O static.bag` to record data for static calibration.
+     - Launch a new terminal and run `rostopic list` and write down topics you need to use. 
+     - Use a terminal before, and run `rviz`. and now you can visualize all the topics you need to look into like this. ![new_rig](https://raw.githubusercontent.com/KnoxKang/KnoxKang-Company-work/master/Images/New_Rig.png)
+     - Before you proceed, if you ar not familiar with camera calibration, refer to [this]() and launch a new terminal and run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING -O static.bag` to record data for static calibration.
      - Run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING /imu -O dynamic.bag` to record data for dynamic calibration.
      - Run `source (Kalibr workspace you've made)/devel/setup.bash` and run `kalibr_calibrate_cameras --bag static.bag --target april_6x6_50x50cm.yaml --models pinhole-equi pinhole-equi --topics /camera/left/image_SOMETHING /camera/left/image_SOMETHING` to calibrate your cameras. This process will take a long time. 
      - Check the results plotted on screen. Remember, good calibration will come up with a reprojection error result tightly packed in a square less than 1 pixel per each side, and final reprojection error, which is shown in results-cam-static.txt in the directory you've ran a preceding command, has to be less than 0.2 pixel.
