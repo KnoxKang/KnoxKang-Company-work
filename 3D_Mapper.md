@@ -39,9 +39,24 @@ This document will look into a rig capable of sensing 3D environment around the 
      - Launch a new terminal and run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING -O static.bag` to record data for static calibration.
      - Run `rosbag record /camera/left/image_SOMETHING /camera/left/image_SOMETHING /imu -O dynamic.bag` to record data for dynamic calibration.
      - Run `source (Kalibr workspace you've made)/devel/setup.bash` and run `kalibr_calibrate_cameras --bag static.bag --target april_6x6_50x50cm.yaml --models pinhole-equi pinhole-equi --topics /camera/left/image_SOMETHING /camera/left/image_SOMETHING` to calibrate your cameras. This process will take a long time. 
-     - Check the results plotted on screen. Remember, good calibration will come up with a reprojection error result tightly packed in a square less than 1 pixel per side. 
+     - Check the results plotted on screen. Remember, good calibration will come up with a reprojection error result tightly packed in a square less than 1 pixel per each side, and final reprojection error, which is shown in results-cam-static.txt in the directory you've ran a preceding command, has to be less than 0.2 pixel.
      - Run `source (Kalibr workspace you've made)/devel/setup.bash` if you are using new terminal, and run `kalibr_calibrate_imu_camera --target april_6x6_50x50cm.yaml --cam camchain-static.yaml --imu (IMU yaml file location) --bag dynamic.bag` to calibrate your cameras with IMU. This process will take lesser time than static calibration.
      
+## Tips and tricks for calibration
+As for static calibration, You have a chance of your final reprojection error never goes under 0.2 pixel, or overall error results are never packed in 1 pixel square, or both. In order to adress this, you'll need to understand why do you need to calibrate your camers, and how does it work. All cameras will receive disorted image of the world if it has a lens. Thus, if you need to use it in computer vision, you need to undistort the image your camera is receiving. Static calibration does just that by looking at the corners of your april target, which is known to be on a straight line, and try to match those corner points in straight line by distorting the image in oposite way the lens distorts the image. After that procedure is done, calibration algorythm will reproject the corner spot to a infinitly far awy sky sphere, comming up with reprojection error result. <br><br> In conclusion, you'll need to 
+- Shorten your camera's shutter time to minimum as much as environmental lighiting will allow. This is to let cameras grab the sharpest image possible.
+- Be in a very good light condition. This is to further shorten the shutter time.
+- Go very close to the cameras.
+- Go very far untill you cameras almost can't read your target.
+- Go from left to right most angle from your cameras.
+- Scew (tilting your target in axis that are not parallel with imaginary line going through the center of camera sensor and the center of camera lens) your target as much as possible (Actually, you only need to scew it upward and span all over the place).
+
+This is the same procedure you might have done it, but, theres more catches.
+- You have to fill imaginary space where your camera can see (calling it 'view space' from now on), comprised with left most and right most side of you cameara's field of view and distance between you camera, as thoroughly as possible. This could be done by moving slowly from back to from all over the view space.
+
+Problem for this method is that the static.bag file becomes too big, costing a big chunk of time on static calibration. In order to avoid this issue
+- You have to lower your camera's framerate (to about 10fps). 
+- If you are up to, lower you camera's resolution (Be aware that if you do this you'll have to stay at that resolution)
 
 ## Things to do
 - Make an algorythm that can acknowledge planes and use camera image data to apply texture on it.
