@@ -52,8 +52,8 @@ As for static calibration, You have a chance of your final reprojection error ne
 - Go from left to right most angle from your cameras.
 - Scew (tilting your target in axis that are not parallel with imaginary line going through the center of camera sensor and the center of camera lens) your target as much as possible (Actually, you only need to scew it upward and span all over the place).
 
-This is the same procedure you might have done it, but, theres more catches.
-- You have to fill imaginary space where your camera can see (calling it 'view space' from now on), comprised with left most and right most side of you cameara's field of view and distance between you camera, as thoroughly as possible. This could be done by moving slowly from back to from all over the view space.
+This is the same procedure you might have done it, but, there's more catches.
+- You have to fill imaginary space where your camera can see (calling it 'view space' from now on), comprised with left most and right most side of you cameara's field of view and distance between you camera, as thoroughly as possible. This could be done by moving slowly from back to from all over the view space. Followed by doing the same with scewed target.
 
 Problem for this method is that the static.bag file becomes too big, costing a big chunk of time on static calibration. In order to avoid this issue
 - You have to lower your camera's framerate (to about 10fps). 
